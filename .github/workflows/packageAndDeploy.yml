@@ -1,0 +1,35 @@
+name: Package for Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker Images
+      run: |
+        docker-compose -f docker-compose.yml build
+
+    - name: Save Docker Images
+      run: |
+        docker save -o docker_images.tar $(docker-compose -f docker-compose.yml config | grep image: | awk '{print $2}')
+
+    - name: Create Zip File
+      run: |
+        zip -r project_package.zip . docker_images.tar
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: project_package
+        path: project_package.zip
