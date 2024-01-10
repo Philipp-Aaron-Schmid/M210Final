@@ -8,6 +8,10 @@ on:
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
+    env:
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
 
     steps:
     - name: Checkout Repository
@@ -15,6 +19,20 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
+
+    - name: Create Application Properties
+      run: |
+        mkdir -p ./M223_Sudoku-main/src/main/resources/
+        echo "spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.driver-class-name=${{ env.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.jpa.hibernate.ddl-auto=${{ env.SPRING_JPA_HIBERNATE_DDL_AUTO }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.jpa.show-sql=${{ env.SPRING_JPA_SHOW_SQL }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.security.user.name=${{ secrets.SPRING_SECURITY_USER_NAME }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.security.user.password=${{ secrets.SPRING_SECURITY_USER_PASSWORD }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "wissquiz.app.jwtSecret=${{ secrets.WISSQUIZ_APP_JWTSECRET }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
+        echo "wissquiz.app.jwtExpirationMs=${{ secrets.WISSQUIZ_APP_JWTEXPIRATIONMS }}" >> ./M223_Sudoku-main/src/main/resources/application.properties
 
     - name: Build Docker Images
       run: |
