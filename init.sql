@@ -1,0 +1,5 @@
+-- init.sql
+CREATE DATABASE IF NOT EXISTS sudoku;
+CREATE USER 'sudoku'@'%' IDENTIFIED BY 'sudoku';
+GRANT ALL PRIVILEGES ON sudoku.* TO 'sudoku'@'%';
+FLUSH PRIVILEGES;

@@ -1,0 +1,40 @@
+version: '3'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'sudoku'
+      MYSQL_USER: 'sudoku'
+      MYSQL_PASSWORD: 'sudoku'
+      MYSQL_ROOT_PASSWORD: 'sudoku'  # Consider using a different password for root
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+  backend:
+    build: ./M223_Sudoku-main
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sudoku
+      - SPRING_DATASOURCE_USERNAME=sudoku
+      - SPRING_DATASOURCE_PASSWORD=sudoku
+    depends_on:
+      - db
+  frontend:
+    build: ./M223_Sudoku_Frontend2-main
+    ports:
+      - "5174:5174"
+  loadbalancer:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db_data:
