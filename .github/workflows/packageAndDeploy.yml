@@ -53,8 +53,8 @@ jobs:
       run: |
         docker save -o docker_images.tar projekt_frontend:latest projekt_backend:latest
 
-        - name: Create Zip File
-        run: zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip ./Projekt docker_images.tar ./Projektdokumentation.pdf ./Presentation.pdf
+    - name: Create Zip File
+      run: zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip ./Projekt docker_images.tar ./Projektdokumentation.pdf ./Presentation.pdf
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2

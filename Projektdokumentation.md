@@ -33,5 +33,46 @@ Frontend Acess Test
 
 Signup Test
 
+Logout Test
+
+
+## Testergebnisse
+
+## Installationsanleitung
+
+# Installationsanleitung für LB-Projekt-M210_Delia-Thomas-Philipp
+
+### Voraussetzungen
+Bevor Sie beginnen, stellen Sie sicher, dass Docker und Docker Compose auf Ihrem System installiert sind. Die Installationsschritte für Docker und Docker Compose variieren je nach Betriebssystem.
+
+### Schritt 1: Projekt herunterladen
+Laden Sie die Datei `LB-Projekt-M210_Delia-Thomas-Philipp.zip` herunter.
+
+### Schritt 2: Zip-Datei entpacken
+Entpacken Sie die heruntergeladene Zip-Datei in einem gewünschten Verzeichnis.
+
+### Schritt 3: Terminal öffnen
+Öffnen Sie ein Terminal im Verzeichnis, das die Datei `docker-compose.yml` enthält.
+
+### Schritt 4: Docker-Images laden
+Führen Sie den folgenden Befehl im Terminal aus, um die Docker-Images lokal zu laden:
+
+```bash
+docker load -i docker_images.tar
+```
+
+### Schritt 6: Anwendung starten
+Geben Sie abschliessend den folgenden Befehl ein, um die Anwendung zu starten:
+
+```bash
+docker-compose up
+```
+
+
+
+## Hilfestellungen
+
+Jakub Docker compose Hilfen
+
 
 
