@@ -43,7 +43,7 @@ jobs:
 
     - name: Save Docker Images
       run: |
-        docker save -o docker_images.tar m210final_frontend:latest m210final_backend:latest
+        docker save -o docker_images.tar projekt_frontend:latest projekt_backend:latest
 
     - name: Create Zip File
       run: |
