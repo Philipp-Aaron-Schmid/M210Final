@@ -48,13 +48,13 @@ jobs:
 
     - name: Create Zip File
       run: |
-        zip -r project_package.zip . docker_images.tar
+        zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip . docker_images.tar
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: project_package
-        path: project_package.zip
+        name: LB-Projekt-M210_Delia-Thomas-Philipp
+        path: LB-Projekt-M210_Delia-Thomas-Philipp.zip
 
     - name: Create Release
       id: create_release

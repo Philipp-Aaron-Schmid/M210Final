@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AuthContext } from '../Components/AuthContext';
+import { AuthContext } from './AuthContext';
 /**
  * Navigation component with NavLink to hold active information it is an always present element
  * It hides elements not acessible to the user with the logic gates however thsi does not preven the user rom acessing
