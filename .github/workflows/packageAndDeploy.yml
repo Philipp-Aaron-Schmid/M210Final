@@ -17,6 +17,14 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Install Pandoc and LaTeX
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+
+    - name: Convert Markdown to PDF
+      run: pandoc ./Projektdokumentation.md -o ./Projektdokumentation.pdf
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
@@ -45,9 +53,8 @@ jobs:
       run: |
         docker save -o docker_images.tar projekt_frontend:latest projekt_backend:latest
 
-    - name: Create Zip File
-      run: |
-        zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip ./Projekt docker_images.tar
+        - name: Create Zip File
+        run: zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip ./Projekt docker_images.tar ./Projektdokumentation.pdf ./Presentation.pdf
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
