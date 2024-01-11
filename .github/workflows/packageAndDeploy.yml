@@ -38,6 +38,9 @@ jobs:
       run: |
         docker-compose -f docker-compose.yml build
 
+    - name: List Docker Images
+      run: docker images
+
     - name: Save Docker Images
       run: |
         docker save -o docker_images.tar $(docker-compose -f docker-compose.yml config | grep image: | awk '{print $2}')
