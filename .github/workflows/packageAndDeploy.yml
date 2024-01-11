@@ -1,0 +1,77 @@
+name: Package for Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+    env:
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Create Application Properties
+      run: |
+        mkdir -p ./Projekt/M223_Sudoku-main/src/main/resources/
+        echo "spring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.datasource.driver-class-name=${{ env.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.jpa.hibernate.ddl-auto=${{ env.SPRING_JPA_HIBERNATE_DDL_AUTO }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.jpa.show-sql=${{ env.SPRING_JPA_SHOW_SQL }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.security.user.name=${{ secrets.SPRING_SECURITY_USER_NAME }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "spring.security.user.password=${{ secrets.SPRING_SECURITY_USER_PASSWORD }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "wissquiz.app.jwtSecret=${{ secrets.WISSQUIZ_APP_JWTSECRET }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+        echo "wissquiz.app.jwtExpirationMs=${{ secrets.WISSQUIZ_APP_JWTEXPIRATIONMS }}" >> ./Projekt/M223_Sudoku-main/src/main/resources/application.properties
+
+    - name: Build Docker Images
+      run: |
+        docker-compose -f ./Projekt/docker-compose.yml build
+
+    - name: List Docker Images
+      run: docker images
+
+    - name: Save Docker Images
+      run: |
+        docker save -o docker_images.tar m210final_frontend:latest m210final_backend:latest
+
+    - name: Create Zip File
+      run: |
+        zip -r LB-Projekt-M210_Delia-Thomas-Philipp.zip ./Projekt docker_images.tar
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: LB-Projekt-M210_Delia-Thomas-Philipp
+        path: LB-Projekt-M210_Delia-Thomas-Philipp.zip
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          tag_name: ${{ github.run_id }}
+          release_name: Release ${{ github.run_id }}
+          draft: false
+          prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./LB-Projekt-M210_Delia-Thomas-Philipp.zip
+          asset_name: LB-Projekt-M210_Delia-Thomas-Philipp.zip
+          asset_content_type: application/zip
