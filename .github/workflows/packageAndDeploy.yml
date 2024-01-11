@@ -43,7 +43,8 @@ jobs:
 
     - name: Save Docker Images
       run: |
-        docker save -o docker_images.tar $(docker-compose -f docker-compose.yml config | grep image: | awk '{print $2}')
+        docker save -o docker_images.tar m210final_frontend:latest m210final_backend:latest
+    
 
     - name: Create Zip File
       run: |
