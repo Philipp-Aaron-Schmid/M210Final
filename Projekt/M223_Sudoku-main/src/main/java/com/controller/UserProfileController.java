@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "*")
 public class UserProfileController {
 
     @Autowired

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/manage/users")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "*")
 public class UserManager {
 
     @Autowired

@@ -1,12 +1,12 @@
 # Stage 1: Build the application
 # Use a Node.js image to build the application
-FROM node:latest as build
+FROM node:18-alpine3.17 as build
 
 # Set the working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json (or yarn.lock if you use Yarn)
-COPY package*.json ./
+COPY . /app
 
 # Install dependencies
 RUN npm install
@@ -18,14 +18,17 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Serve the application
-# Use a lightweight server, like nginx, to serve the built files
-FROM nginx:alpine
+RUN apk update
+RUN apk add nginx
 
 # Copy the build directory from the build stage to the server's root
-COPY --from=build /app/dist /usr/share/nginx/html
+RUN cp -r /app/dist/* /var/lib/nginx/html/
 
 # Expose the port the server listens on
 EXPOSE 80
+
+# Copy conf file to avoid https
+COPY ./nginx.conf /etc/nginx/http.d/default.conf
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]

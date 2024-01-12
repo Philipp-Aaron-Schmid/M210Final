@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/manage")
-@CrossOrigin(origins = "http://localhost:5174") //cross origin annotation to specify from where this request mapping can be acessed
+@CrossOrigin(origins = "*") //cross origin annotation to specify from where this request mapping can be acessed
 public class ChallengeManager {
 
     private ChallengeRepository challengeRepository;

@@ -109,6 +109,8 @@ Geben Sie abschliessend den folgenden Befehl ein, um die Anwendung zu starten:
 docker-compose up
 ```
 
+INSERT INTO role (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN');
+
 
 
 ## Hilfestellungen

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ import com.repository.*;
 import com.util.*;
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:5174", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -41,7 +42,8 @@ public class AuthController {
     JwtUtils jwtUtils;
 // this si a cotroller class that hanles signups ans sign ins generatin jwt tokens and encoding passwords among other 
     @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:5174")
+    @CrossOrigin(origins = "*")
+    @Transactional
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
@@ -60,7 +62,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:5174")
+    @CrossOrigin(origins = "*")
+    @Transactional
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity

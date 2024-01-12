@@ -27,7 +27,7 @@ import com.service.Scorer;
 
 @RestController
 @RequestMapping("/play")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "*")
 public class PlayController {
     private ChallengeRepository challengeRepository;
     private final UserRepository userRepository; // Assuming you have a UserRepository

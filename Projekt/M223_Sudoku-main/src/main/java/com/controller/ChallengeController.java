@@ -21,7 +21,7 @@ import lombok.Data;
 
 @RestController
 @RequestMapping("/challenges")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "*")
 public class ChallengeController {
     private final ChallengeRepository challengeRepository;
     private PlayRepository playRepository;
