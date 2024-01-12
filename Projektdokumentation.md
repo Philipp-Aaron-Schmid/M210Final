@@ -100,7 +100,7 @@ Entpacken Sie die heruntergeladene Zip-Datei in einem gewünschten Verzeichnis.
 Führen Sie den folgenden Befehl im Terminal aus, um die Docker-Images lokal zu laden:
 
 ```bash
-docker load -i docker_images.tar
+docker load -i ../docker_images.tar
 ```
 
 ### Schritt 6: Anwendung starten
