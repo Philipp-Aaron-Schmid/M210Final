@@ -48,6 +48,8 @@ Die Infrastruktur des Projekts, besteht aus verschiedenen Docker-Containern wird
     - Port `8081` auf dem Host zu `80` im Container.
     - Abhängigkeiten von `backend` und `frontend`.
 
+
+
 ### Java-Anwendung
 #### Build-Stadium:
 - Verwendet Maven mit OpenJDK 21.
@@ -69,7 +71,6 @@ Die Infrastruktur des Projekts, besteht aus verschiedenen Docker-Containern wird
 ### Zusammenfassung
 Die Infrastruktur besteht aus einer Java- und einer Node.js-Webanwendung sowie einer MySQL-Datenbank, alle in Docker-Containern. Ein Nginx-basierter Loadbalancer wird ebenfalls verwendet. Die Containerisierung ermöglicht eine modulare und skalierbare Architektur.
 
-## Konfigurationen
 
 ## Testplan
 
@@ -78,7 +79,7 @@ Die Infrastruktur besteht aus einer Java- und einer Node.js-Webanwendung sowie e
 | TC-001       | Docker Run Test     | 1. Unzip LB-Projekt-M210_Delia-Thomas-Philipp.zip<br>2. öffne das Terminal<br>3. execute: `docker load -i docker_images.tar` <br>3.execute: `docker-compose up`| Die Docker umgebung ist aufgestarted und alle 4 container sind im betrieb | Die Docker umgebung ist aufgestarted und alle 4 container sind im betrieb| Bestanden   |
 | TC-002       | DB access Test          | 1. TC-001 war erfolgreich<br>2. öffne das Terminal und execute: `mysql -h 127.0.0.1 -P 3307 -u sudoku -psudoku`<br>3. execute: `use sudoku;`<br>4. execute: `show tables;` | Die mysql DB hatt sich geöffnet und die tabelle user ist in der DB SUdoku vorhanden| Die mysql DB hatt sich geöffnet und die tabelle user ist in der DB SUdoku vorhanden | Bestanden  |
 | TC-003       | Frontend Acess Test   | 1. ImBrowser Firefox ruffe `localhost:5174/index`auf | Die Index Seite wird mit den daten aus dem backend angezeigt | Die seite ist nicht verfügbar | Nicht Bestanden  |
-| TC-004       | Signup Test       | 1. ImBrowser Firefox ruffe `localhost:5174/signup`auf<br>2. Gebe die Daten ein Benutzername: `Test` Email: `Test@Test.com` Passswort: `test123`<br>3. Klicke auf Anmelden | Der User wird auf die signin seite umgeleitet| Die seite ist nicht verfügbar | Passed   |
+| TC-004       | Signup Test       | 1. ImBrowser Firefox ruffe `localhost:5174/signup`auf<br>2. Gebe die Daten ein Benutzername: `Test` Email: `Test@Test.com` Passswort: `test123`<br>3. Klicke auf Anmelden | Der User wird auf die signin seite umgeleitet| Die seite ist nicht verfügbar | nicht bestanden   |
 | TC-005       | Signin Test         | 1. Signin mitt Benutzername `Test`und Passwort: `test`` <br>2. Klicke auf anmelden | Der User wird auf die Challenges seite umgeleitet | Die seite ist nicht verfügbar | Nicht Bestanden |
 
 ## Installationsanleitung
@@ -115,7 +116,17 @@ INSERT INTO role (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_ADMIN');
 
 ## Hilfestellungen
 
-Jakub Docker compose Hilfen
+Jakub Docker compose Hilfen zur findung des frontends
+
+
+## ToDo 
+
+- Load Backend ansprachen über load Balancer
+- Dockercopose file secrets integration
+- Remedy Exposed Ports
+
+
+
 
 
 
